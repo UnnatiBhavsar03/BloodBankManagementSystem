@@ -1,0 +1,30 @@
+@charset "UTF-8";
+/* Container to divide the page into two equal parts */
+.container {
+    display: flex;
+    justify-content: flex-end; /* Moves image to the right */
+    padding: 20px;
+}
+
+img {
+    width: 700px; /* Adjust size as needed */
+    height: auto;
+    border-radius: 10px; /* Optional for rounded corners */
+}
+
+.text{
+	background-color:white;
+	font-family:'Times New Roman';
+	justify-content: left;
+	width: 700px;
+	height:auto;
+	margin:0;
+	 padding: 20px;
+	 color:red;
+}
+
+.paragraph
+{
+	
+	line-height: 0.5;
+}

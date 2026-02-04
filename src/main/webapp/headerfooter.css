@@ -1,0 +1,106 @@
+/* General Page Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+/* Header Styling */
+header {
+    background-color: #b30000;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    width: 100%
+}
+
+.name{
+	text-align: center;
+}
+
+.logo-container {
+    display: flex;
+   justify-content: left; 
+}
+
+.logo {
+            height: 70px; /* Adjust the height as needed */
+            width: auto;
+        }
+        
+
+/* Navigation Menu Styling */
+nav {
+    background-color: #800000;
+    text-align: center;
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+     transition: font-size 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+nav ul li a:hover {
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+/* Content Area */
+.content {
+    padding: 20px;
+    text-align: center;
+}
+main {
+    padding: 20px;
+    min-height: 300px;
+}
+
+
+/* Footer Styling */
+footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 20px;
+    width: 100%
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+}
+
+footer ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+footer ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    transition: font-size 0.3s ease-in-out;
+}
+
+/* Hover Effect in Footer */
+footer ul li a:hover {
+    font-size: 16px;
+}
