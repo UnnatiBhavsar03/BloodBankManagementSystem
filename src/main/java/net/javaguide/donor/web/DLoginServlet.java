@@ -13,87 +13,64 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
+import net.javaguide.login.util.OtpUtil;
+import net.javaguide.userregister.MailUtil;
 
 @WebServlet("/DLoginServlet")
 public class DLoginServlet extends HttpServlet {
-	
-	 private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	    public DLoginServlet() {
-	        super();
-	    }
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+    public DLoginServlet() {
+        super();
+    }
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        
+        // Database credentials
+        String jdbcURL = "jdbc:mysql://localhost:3306/BloodBank";
+        String dbUser = "root";
+        String dbPassword = "Unnati@03";
+        
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            try (Connection connection = DriverManager.getConnection(jdbcURL, dbUser, dbPassword)) {
+                String sql = "SELECT * FROM user WHERE email = ? AND password = ?";
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setString(1, email);
+                statement.setString(2, password);
+                
+                ResultSet result = statement.executeQuery();
+                
+                if (result.next()) {
+                    // Successful primary authentication - set pending OTP session state
+                    HttpSession session = request.getSession();
+                    
+                    String otp = OtpUtil.generateOtp();
+                    String otpHash = OtpUtil.hashOtp(otp);
+                    long now = System.currentTimeMillis();
+                    long expiry = now + (5 * 60 * 1000); // 5 minutes
 
-		
-		
-		
-		
-		
-		        
-		        String email = request.getParameter("email");
-		        String password = request.getParameter("password");
-		        
-		        // Database credentials
-		        String jdbcURL = "jdbc:mysql://localhost:3306/BloodBank";
-		        String dbUser = "root";
-		        String dbPassword = "Unnati@03";
-		        
-		        try {
-		            Class.forName("com.mysql.cj.jdbc.Driver");
-		            try (Connection connection = DriverManager.getConnection(jdbcURL, dbUser, dbPassword)) {
-		                String sql = "SELECT * FROM user WHERE email = ? AND password = ?";
-		                PreparedStatement statement = connection.prepareStatement(sql);
-		                statement.setString(1, email);
-		                statement.setString(2, password); // For hashed passwords, use appropriate hashing
-		                
-		                ResultSet result = statement.executeQuery();
-		                
-		                if (result.next()) {
-		                    // Successful login
-		                    HttpSession session = request.getSession();
-		                    session.setAttribute("email", email);
-		                   
-		                    response.sendRedirect("donordesh.jsp");
-		                } else {
-		                    // Failed login
-		                	
-		                    request.setAttribute("errorMessage", "Invalid username or password");
-		                    
-		                    RequestDispatcher dispatcher = request.getRequestDispatcher("donorlogin.jsp");
-		                    dispatcher.forward(request, response);
-		                }
-		            }
-		        } catch (Exception e) {
-		            throw new ServletException("Login failed", e);
-		        }
-		    }
-		}
+                    session.setAttribute("pending_email", email);
+                    session.setAttribute("pending_role", "donor");
+                    session.setAttribute("otp_hash", otpHash);
+                    session.setAttribute("otp_expiry", Long.valueOf(expiry));
+                    session.setAttribute("otp_attempts", Integer.valueOf(0));
+                    session.setAttribute("otp_last_sent", Long.valueOf(now));
 
-		
-		
-		
-		
-		
-		   
-
-		   
-		       
-		
-
-		
-		
-		
-		
-		
-		
-		
-		
-		        
-		    
-	
-
-
+                    // Send OTP email asynchronously and redirect immediately
+                    MailUtil.sendOtpEmailAsync(email, otp, session);
+                    response.sendRedirect("otp_verify.jsp");
+                } else {
+                    // Failed primary login
+                    request.setAttribute("errorMessage", "Invalid username or password");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("donorlogin.jsp");
+                    dispatcher.forward(request, response);
+                }
+            }
+        } catch (Exception e) {
+            throw new ServletException("Login failed", e);
+        }
+    }
+}

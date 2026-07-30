@@ -1,0 +1,16 @@
+# Eclipse local metadata and build outputs
+.settings/
+.metadata/
+bin/
+build/
+
+# Log files
+*.log
+logs/
+
+# Operating System store files
+.DS_Store
+Thumbs.db
+
+# Environment / Local credentials configuration
+src/main/resources/email.properties
