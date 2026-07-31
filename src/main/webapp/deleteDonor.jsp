@@ -1,14 +1,9 @@
-<%@ page import="java.sql.*" %>
+<%@ page import="java.sql.*, net.javaguide.login.database.DBUtil" %>
 <%
     int donorId = Integer.parseInt(request.getParameter("donor_id"));
 
-    String dbURL = "jdbc:mysql://localhost:3306/BloodBank";
-    String dbUser = "root";
-    String dbPass = "Unnati@03";
-
     try {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection con = DriverManager.getConnection(dbURL, dbUser, dbPass);
+        Connection con = DBUtil.getConnection();
 
         PreparedStatement ps = con.prepareStatement("DELETE FROM donor WHERE d_id = ?");
         ps.setInt(1, donorId);

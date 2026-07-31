@@ -1,10 +1,6 @@
-<%@ page import="java.sql.*, java.util.*" %>
+<%@ page import="java.sql.*, java.util.*, net.javaguide.login.database.DBUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    String dbURL = "jdbc:mysql://localhost:3306/BloodBank";
-    String dbUser = "root";
-    String dbPass = "Unnati@03";
-
     String blood_group = request.getParameter("blood_group");
     String units = request.getParameter("units");
 
@@ -13,8 +9,7 @@
     ResultSet rs = null;
 
     try {
-        Class.forName("com.mysql.jdbc.Driver");
-        con = DriverManager.getConnection(dbURL, dbUser, dbPass);
+        con = DBUtil.getConnection();
 
         String query = "SELECT * FROM stock WHERE 1=1";
 

@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import net.javaguide.login.database.DBUtil;
 import net.javaguide.login.util.OtpUtil;
 import net.javaguide.userregister.MailUtil;
 
@@ -28,14 +29,8 @@ public class DLoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         
-        // Database credentials
-        String jdbcURL = "jdbc:mysql://localhost:3306/BloodBank";
-        String dbUser = "root";
-        String dbPassword = "Unnati@03";
-        
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            try (Connection connection = DriverManager.getConnection(jdbcURL, dbUser, dbPassword)) {
+            try (Connection connection = DBUtil.getConnection()) {
                 String sql = "SELECT * FROM user WHERE email = ? AND password = ?";
                 PreparedStatement statement = connection.prepareStatement(sql);
                 statement.setString(1, email);

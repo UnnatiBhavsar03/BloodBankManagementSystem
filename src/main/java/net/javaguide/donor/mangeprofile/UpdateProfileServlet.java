@@ -14,6 +14,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
+import net.javaguide.login.database.DBUtil;
+
 
 
 /**
@@ -58,14 +60,8 @@ public class UpdateProfileServlet extends HttpServlet {
     	        HttpSession session = request.getSession();
     	        String email = (String) session.getAttribute("email");
 
-    	        // Database connection parameters
-    	        String dbURL = "jdbc:mysql://localhost:3306/BloodBank";
-    	        String dbUser = "root";
-    	        String dbPass = "Unnati@03";
-
     	        try {
-    	            Class.forName("com.mysql.cj.jdbc.Driver");
-    	            Connection conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
+    	            Connection conn = DBUtil.getConnection();
     	            PreparedStatement stmt = conn.prepareStatement(
     	                "UPDATE user SET name = ?, phone = ?, address = ?, city = ?, gender = ?, dob = ?, blood_group=? Where email= ?"
     	

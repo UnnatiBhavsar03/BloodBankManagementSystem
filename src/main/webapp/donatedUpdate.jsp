@@ -1,16 +1,11 @@
-<%@ page import="java.sql.*" %>
+<%@ page import="java.sql.*, net.javaguide.login.database.DBUtil" %>
 <%
     String bloodGroup = request.getParameter("blood_group");
     int bloodUnits = Integer.parseInt(request.getParameter("blood_units"));
     int donorId = Integer.parseInt(request.getParameter("donor_id"));
 
-    String dbURL = "jdbc:mysql://localhost:3306/BloodBank";
-    String dbUser = "root";
-    String dbPass = "Unnati@03";
-
     try {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection con = DriverManager.getConnection(dbURL, dbUser, dbPass);
+        Connection con = DBUtil.getConnection();
 
         PreparedStatement ps1 = con.prepareStatement("UPDATE stock SET units = units + ? WHERE blood_group = ?");
         ps1.setInt(1, bloodUnits);

@@ -1,11 +1,6 @@
-<%@ page import="java.sql.*, java.util.*" %>
+<%@ page import="java.sql.*, java.util.*, net.javaguide.login.database.DBUtil" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%
-    // Database connection
-    String dbURL = "jdbc:mysql://localhost:3306/BloodBank";
-    String dbUser = "root";
-    String dbPass = "Unnati@03";
-
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
@@ -17,8 +12,7 @@
     String name = request.getParameter("name");
 
     try {
-        Class.forName("com.mysql.jdbc.Driver");
-        con = DriverManager.getConnection(dbURL, dbUser, dbPass);
+        con = DBUtil.getConnection();
 
         String query = "SELECT donor.*, user.name, user.email, user.phone, user.address, user.city, user.gender, user.dob, user.blood_group " +
                        "FROM donor JOIN user ON donor.u_id = user.u_id WHERE 1=1 ";

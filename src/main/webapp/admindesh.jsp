@@ -1,4 +1,4 @@
-<%@ page import="java.sql.*" %>
+<%@ page import="java.sql.*, java.util.*, net.javaguide.login.database.DBUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -52,8 +52,7 @@
         Statement st = null;
         ResultSet rs = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BloodBank", "root", "Unnati@03");
+            con = DBUtil.getConnection();
             st = con.createStatement();
             rs = st.executeQuery("SELECT blood_group, units FROM stock");
 

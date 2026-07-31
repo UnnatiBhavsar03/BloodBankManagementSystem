@@ -1,13 +1,8 @@
-<%@ page import="java.sql.*, java.time.LocalDate" %>
+<%@ page import="java.sql.*, java.time.LocalDate, net.javaguide.login.database.DBUtil" %>
 <%
     // Retrieve filter parameters
     String filterDate = request.getParameter("campDate");
     String filterCity = request.getParameter("city");
-
-    // Initialize database connection parameters
-    String dbURL = "jdbc:mysql://localhost:3306/BloodBank";
-    String dbUser = "root";
-    String dbPass = "Unnati@03";
 
     // Initialize variables
     Connection conn = null;
@@ -136,8 +131,7 @@
         </tr>
         <%
             try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
+                conn = DBUtil.getConnection();
 
                 // Build SQL query with filters
                 StringBuilder sql = new StringBuilder("SELECT c_id, c_date, c_time, c_address, c_city FROM blood_camp WHERE c_date > ?");

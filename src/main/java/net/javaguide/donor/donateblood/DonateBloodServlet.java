@@ -15,6 +15,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import net.javaguide.login.database.DBUtil;
+
 /**
  * Servlet implementation class DonateBloodServlet
  */
@@ -47,7 +49,6 @@ public class DonateBloodServlet extends HttpServlet {
 		        // Database connection parameters
 		       // String dbURL = "jdbc:mysql://localhost:3306/BloodBank";
 		       // String dbUser = "root";
-		        //String dbPass = "Unnati@03";
 
 		        //try {
 		          //  Class.forName("com.mysql.cj.jdbc.Driver");
@@ -115,14 +116,8 @@ public class DonateBloodServlet extends HttpServlet {
 		        HttpSession session = request.getSession();
 		        String email = (String) session.getAttribute("email");
 
-		        // Database connection parameters
-		        String dbURL = "jdbc:mysql://localhost:3306/BloodBank";
-		        String dbUser = "root";
-		        String dbPass = "Unnati@03";
-
 		        try {
-		            Class.forName("com.mysql.cj.jdbc.Driver");
-		            Connection conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
+		            Connection conn = DBUtil.getConnection();
 
 		            // Retrieve user ID using email
 		            PreparedStatement psUser = conn.prepareStatement("SELECT u_id FROM user WHERE email = ?");

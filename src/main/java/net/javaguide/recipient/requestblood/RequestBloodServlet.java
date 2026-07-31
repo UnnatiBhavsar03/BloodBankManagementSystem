@@ -16,10 +16,10 @@ import java.io.File;
 import java.io.IOException;
 
 import java.sql.Connection;
-
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import net.javaguide.login.database.DBUtil;
 
 /**
  * Servlet implementation class RequestBloodServlet
@@ -113,10 +113,8 @@ public class RequestBloodServlet extends HttpServlet {
 		        
 		        
 
-		        // Insert data into the donor table
 		        try {
-		            Class.forName("com.mysql.jdbc.Driver");
-		            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BloodBank", "root", "Unnati@03");
+		            Connection con = DBUtil.getConnection();
 
 		            // Retrieve u_id from user table
 		            PreparedStatement psUser = con.prepareStatement("SELECT u_id FROM user WHERE email = ?");

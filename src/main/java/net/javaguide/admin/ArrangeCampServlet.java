@@ -13,13 +13,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-
+import net.javaguide.login.database.DBUtil;
 
 @WebServlet("/ArrangeCampServlet")
 public class ArrangeCampServlet extends HttpServlet {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/bloodbank";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "Unnati@03";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Example: Retrieve form data from the request
@@ -32,11 +29,8 @@ public class ArrangeCampServlet extends HttpServlet {
         PreparedStatement preparedStatement = null;
 
         try {
-            // Load JDBC driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
             // Establish connection
-            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            connection = DBUtil.getConnection();
 
             // Insert camp data into the database
             String sql = "INSERT INTO blood_camp (c_address, c_city, c_date, c_time) VALUES (?, ?, ?, ?)";

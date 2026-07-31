@@ -3,6 +3,8 @@
 .metadata/
 bin/
 build/
+target/
+*.class
 
 # Log files
 *.log
@@ -11,6 +13,10 @@ logs/
 # Operating System store files
 .DS_Store
 Thumbs.db
+
+# IDE configuration directories
+.idea/
+.vscode/
 
 # Environment / Local credentials configuration
 src/main/resources/email.properties

@@ -1,4 +1,4 @@
-<%@ page import="java.sql.*" %>
+<%@ page import="java.sql.*, net.javaguide.login.database.DBUtil" %>
 <%@ page session="true" %>
 <%
     // Retrieve user ID from session
@@ -17,14 +17,8 @@
     String dob = "";
     String bloodGroup = "";
 
-    // Database connection parameters
-    String dbURL = "jdbc:mysql://localhost:3306/BloodBank";
-    String dbUser = "root";
-    String dbPass = "Unnati@03";
-
     try {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
+        Connection conn = DBUtil.getConnection();
         PreparedStatement stmt = conn.prepareStatement("SELECT name, phone, address, city, gender, dob, blood_group FROM user WHERE email = ?");
         stmt.setString(1, email);
         ResultSet rs = stmt.executeQuery();

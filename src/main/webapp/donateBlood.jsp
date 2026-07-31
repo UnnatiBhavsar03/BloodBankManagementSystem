@@ -1,4 +1,4 @@
-<%@ page import="java.sql.*, java.time.LocalDate" %>
+<%@ page import="java.sql.*, java.time.LocalDate, net.javaguide.login.database.DBUtil" %>
 
 
 <%
@@ -7,14 +7,8 @@ String email = (String) session.getAttribute("email");
 String name = "";
 String bloodGroup = "";
 
-// Database connection parameters
-String dbURL = "jdbc:mysql://localhost:3306/BloodBank";
-String dbUser = "root";
-String dbPass = "Unnati@03";
-
 try {
-    Class.forName("com.mysql.cj.jdbc.Driver");
-    Connection conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
+    Connection conn = DBUtil.getConnection();
     PreparedStatement ps = conn.prepareStatement("SELECT name, blood_group FROM user WHERE email = ?");
     ps.setString(1, email);
     ResultSet rs = ps.executeQuery();
@@ -47,10 +41,7 @@ try {
     if (campIdParam != null && !campIdParam.isEmpty()) {
         isCampRegistration = true;
         try {
-            
-
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
+            Connection conn = DBUtil.getConnection();
 
             // Retrieve the camp date based on campId
             PreparedStatement ps = conn.prepareStatement("SELECT c_date FROM blood_camp WHERE c_id = ?");

@@ -1,4 +1,4 @@
-<%@ page import="java.sql.*" %>
+<%@ page import="java.sql.*, net.javaguide.login.database.DBUtil" %>
 <%
    
 //Retrieve email from session
@@ -6,8 +6,7 @@ String email = (String) session.getAttribute("email");
 String name = "";
     if (email != null) {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BloodBank", "root", "Unnati@03");
+            Connection con = DBUtil.getConnection();
             PreparedStatement ps = con.prepareStatement("SELECT name FROM user WHERE email = ?");
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();

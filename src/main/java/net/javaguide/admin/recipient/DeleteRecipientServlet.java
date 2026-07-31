@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
+import net.javaguide.login.database.DBUtil;
+
 /**
  * Servlet implementation class DeleteRecipientServlet
  */
@@ -34,14 +36,9 @@ public class DeleteRecipientServlet extends HttpServlet {
 		
 		
 		        int recipientId = Integer.parseInt(request.getParameter("recipient_id"));
-		        
-		        String dbURL = "jdbc:mysql://localhost:3306/BloodBank";
-		        String dbUser = "root";
-		        String dbPass = "Unnati@03";
 
 		        try {
-		            Class.forName("com.mysql.jdbc.Driver");
-		            Connection con = DriverManager.getConnection(dbURL, dbUser, dbPass);
+		            Connection con = DBUtil.getConnection();
 		            
 		            PreparedStatement ps = con.prepareStatement("DELETE FROM recipient WHERE r_id = ?");
 		            ps.setInt(1, recipientId);

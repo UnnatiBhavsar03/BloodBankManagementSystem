@@ -13,6 +13,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
+import net.javaguide.login.database.DBUtil;
+
 /**
  * Servlet implementation class UserRegisterServlet
  */
@@ -32,8 +34,7 @@ public class UserRegisterServlet extends HttpServlet {
 
         try {
             // Database connection
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bloodbank", "root", "Unnati@03");
+            Connection con = DBUtil.getConnection();
 
             // Insert user data
             String query = "INSERT INTO user (name, email, password, phone, address, city, gender, dob, blood_group) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";

@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
+import net.javaguide.login.database.DBUtil;
+
 /**
  * Servlet implementation class ConfirmRecipientServlet
  */
@@ -37,14 +39,9 @@ public class ConfirmRecipientServlet extends HttpServlet {
 		        int recipientId = Integer.parseInt(request.getParameter("recipient_id"));
 		        String bloodGroup = request.getParameter("blood_group");
 		        int requiredUnits = Integer.parseInt(request.getParameter("required_units"));
-		        
-		        String dbURL = "jdbc:mysql://localhost:3306/BloodBank";
-		        String dbUser = "root";
-		        String dbPass = "Unnati@03";
 
 		        try {
-		            Class.forName("com.mysql.jdbc.Driver");
-		            Connection con = DriverManager.getConnection(dbURL, dbUser, dbPass);
+		            Connection con = DBUtil.getConnection();
 		            con.setAutoCommit(false);  // start transaction
 
 		            // Update stock table

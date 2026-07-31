@@ -1,4 +1,4 @@
-<%@ page import="java.sql.*" %>
+<%@ page import="java.sql.*, net.javaguide.login.database.DBUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String userEmail = (String) session.getAttribute("email");
@@ -105,8 +105,7 @@
     String r_bloodgroup = request.getParameter("r_bloodgroup");
 
     try {
-        Class.forName("com.mysql.jdbc.Driver");
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BloodBank", "root", "Unnati@03");
+        con = DBUtil.getConnection();
 
         String sql = 
                "SELECT r.* FROM recipient r " +
