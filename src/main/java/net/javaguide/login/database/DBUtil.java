@@ -12,7 +12,7 @@ public class DBUtil {
             url = System.getProperty("db.url");
         }
         if (url == null || url.trim().isEmpty()) {
-            url = "jdbc:mysql://localhost:3306/BloodBank";
+            url = "jdbc:mysql://localhost:3306/bloodbank";
         }
         return url;
     }
@@ -40,11 +40,12 @@ public class DBUtil {
     }
 
     public static Connection getConnection() throws SQLException, ClassNotFoundException {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            Class.forName("com.mysql.jdbc.Driver");
-        }
-        return DriverManager.getConnection(getDbUrl(), getDbUser(), getDbPassword());
+    try {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+    } catch (ClassNotFoundException e) {
+        Class.forName("com.mysql.jdbc.Driver");
     }
+
+    return DriverManager.getConnection(getDbUrl(), getDbUser(), getDbPassword());
+}
 }
